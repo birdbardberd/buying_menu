@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="theme-color" content="#FFF8E7" />
+  <title>おかいものリスト</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ========== APP ROOT ========== -->
+<div id="app">
+
+  <!-- ===== 画面A: 献立選択 ===== -->
+  <div id="screen-menu" class="screen active">
+    <header class="top-bar">
+      <h1 class="top-bar__title">🥘 今週の献立をえらぶ</h1>
+    </header>
+
+    <main class="content" id="menu-list-container">
+      <!-- 献立カードはJSで生成 -->
+    </main>
+
+    <div class="fab-area">
+      <button class="btn-fab" id="btn-add-menu" onclick="openAddMenuModal()">
+        ＋ 新しい献立を追加する
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== 画面B: 買い物リスト ===== -->
+  <div id="screen-shopping" class="screen">
+    <header class="top-bar">
+      <h1 class="top-bar__title">🛒 買い物リスト</h1>
+      <button class="btn-clear-done" onclick="clearCheckedItems()">完了済みを削除</button>
+    </header>
+
+    <main class="content" id="shopping-list-container">
+      <!-- カテゴリ別リストはJSで生成 -->
+    </main>
+  </div>
+
+  <!-- ===== 画面C: 履歴 ===== -->
+  <div id="screen-history" class="screen">
+    <header class="top-bar">
+      <h1 class="top-bar__title">📋 履歴</h1>
+    </header>
+    <main class="content">
+      <p class="empty-msg">今後追加予定の機能です</p>
+    </main>
+  </div>
+
+  <!-- ===== 画面D: 設定 ===== -->
+  <div id="screen-settings" class="screen">
+    <header class="top-bar">
+      <h1 class="top-bar__title">⚙️ 設定</h1>
+    </header>
+    <main class="content" id="settings-container">
+      <!-- 設定内容はJSで生成 -->
+    </main>
+  </div>
+
+  <!-- ===== タブバー ===== -->
+  <nav class="tab-bar">
+    <button class="tab-btn active" data-screen="menu" onclick="switchTab('menu', this)">
+      <span class="tab-icon">🥘</span>
+      <span class="tab-label">献立</span>
+    </button>
+    <button class="tab-btn" data-screen="shopping" onclick="switchTab('shopping', this)">
+      <span class="tab-icon">🛒</span>
+      <span class="tab-label">買い物</span>
+    </button>
+    <button class="tab-btn" data-screen="history" onclick="switchTab('history', this)">
+      <span class="tab-icon">📋</span>
+      <span class="tab-label">履歴</span>
+    </button>
+    <button class="tab-btn" data-screen="settings" onclick="switchTab('settings', this)">
+      <span class="tab-icon">⚙️</span>
+      <span class="tab-label">設定</span>
+    </button>
+  </nav>
+
+</div><!-- /#app -->
+
+<!-- ========== モーダル: 献立追加 ========== -->
+<div id="modal-add-menu" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-add-menu')">
+  <div class="modal-card">
+    <h2 class="modal-title">🍳 献立を追加</h2>
+
+    <label class="form-label">献立名</label>
+    <input type="text" id="input-menu-name" class="form-input" placeholder="例：肉じゃが" />
+
+    <label class="form-label">材料を追加</label>
+    <div id="ingredient-list" class="ingredient-list"></div>
+    <button class="btn-add-ingredient" onclick="addIngredientRow()">＋ 材料を追加</button>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-add-menu')">キャンセル</button>
+      <button class="btn-save" onclick="saveMenu()">保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== モーダル: 献立編集 ========== -->
+<div id="modal-edit-menu" class="modal-overlay" onclick="closeModalOnOverlay(event, 'modal-edit-menu')">
+  <div class="modal-card">
+    <h2 class="modal-title">✏️ 献立を編集</h2>
+
+    <input type="hidden" id="edit-menu-id" />
+    <label class="form-label">献立名</label>
+    <input type="text" id="edit-menu-name" class="form-input" placeholder="例：肉じゃが" />
+
+    <label class="form-label">材料</label>
+    <div id="edit-ingredient-list" class="ingredient-list"></div>
+    <button class="btn-add-ingredient" onclick="addEditIngredientRow()">＋ 材料を追加</button>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-edit-menu')">キャンセル</button>
+      <button class="btn-save" onclick="saveEditMenu()">保存する</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
