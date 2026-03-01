@@ -1,7 +1,7 @@
 📱 スマホでの使い方（Android / iPhone 共通）
 
 ① 公開URLをブラウザで開く
-（例：https://あなたのID.github.io/buying_menu/）
+（https://mbyte-violin.github.io/buying_menu/）
 
 ② ブラウザのメニューを開く
 
